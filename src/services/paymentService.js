@@ -1,10 +1,13 @@
 // src/services/paymentService.js
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 export const verifyPayment = async (sessionId) => {
     if (!sessionId) {
       throw new Error('No session ID provided');
     }
     
-    const response = await fetch(`https://api.bigwin.gold/verify-payment/${sessionId}`);
+    const response = await fetch(`${API_BASE_URL}/verify-payment/${sessionId}`);
     const data = await response.json();
     
     if (!response.ok) {
@@ -15,7 +18,7 @@ export const verifyPayment = async (sessionId) => {
 };
   
 export const processPayment = async (paymentData) => {
-    const response = await fetch('https://api.bigwin.gold/checkout', {
+    const response = await fetch(`${API_BASE_URL}/checkout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
