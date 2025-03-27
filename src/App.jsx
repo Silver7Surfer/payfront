@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Step1 from './components/Step1';
 import Step2 from './components/Step2';
 import Step3 from './components/Step3';
-import Step4 from './components/Step4';
 
 function App() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -16,7 +15,6 @@ function App() {
     username: false,
     amount: false
   });
-  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -69,48 +67,12 @@ function App() {
     return isValid;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (currentStep === 4) {
-      setLoading(true);
-      
-      try {
-        const response = await fetch('http://localhost:5000/checkout', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            serverProvider: formData.serverProvider,
-            username: formData.username,
-            amount: formData.amount
-          }),
-        });
-        
-        const data = await response.json();
-        
-        if (!response.ok) {
-          throw new Error(data.message || 'Error processing payment');
-        }
-        
-        // Redirect to Stripe checkout page
-        window.location.href = data.url;
-        
-      } catch (error) {
-        console.error('Error submitting payment:', error);
-        alert(`Error: ${error.message}`);
-        setLoading(false);
-      }
-    }
-  };
-
   return (
     <div className="min-h-screen w-full bg-black text-white font-sans text-center flex flex-col justify-between">
       <div className="flex-grow flex flex-col items-center justify-center py-5 px-4">
         <h1 className="text-2xl font-bold mb-8">PayNow</h1>
         
-        <form id="depositForm" onSubmit={handleSubmit} className="w-full max-w-md">
+        <form id="depositForm" className="w-full max-w-md">
           {currentStep === 1 && (
             <Step1 
               formData={formData}
@@ -136,15 +98,6 @@ function App() {
               formData={formData}
               goToStep={goToStep}
               currentStep={currentStep}
-            />
-          )}
-
-          {currentStep === 4 && (
-            <Step4 
-              goToStep={goToStep}
-              currentStep={currentStep}
-              formData={formData}
-              loading={loading}
             />
           )}
         </form>

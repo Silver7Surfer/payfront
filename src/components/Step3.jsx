@@ -1,8 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProgressBar from './ProgressBar';
 import backArrow from '../assets/back_arrow.svg';
+import { processPayment } from '../services/paymentService';
 
 const Step3 = ({ formData, goToStep, currentStep }) => {
+  const [loading, setLoading] = useState(false);
+  
+  const handleStripeCheckout = async () => {
+    setLoading(true);
+    
+    try {
+      const data = await processPayment({
+        serverProvider: formData.serverProvider,
+        username: formData.username,
+        amount: formData.amount
+      });
+      
+      // Redirect to Stripe checkout page
+      window.location.href = data.url;
+      
+    } catch (error) {
+      console.error('Error submitting payment:', error);
+      alert(`Error: ${error.message}`);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="bg-[#1a1a1a] rounded-lg p-5 w-full max-w-md mx-auto my-5 relative">
       <img 
@@ -14,21 +37,23 @@ const Step3 = ({ formData, goToStep, currentStep }) => {
       
       <ProgressBar currentStep={currentStep} />
       
-      <h2 className="text-xl font-bold mb-2">Confirm</h2>
-      <p className="mb-4">Please confirm all your entries before submitting your deposit.</p>
+      <h2 className="text-xl font-bold mb-2">Confirm & Pay</h2>
+      <p className="mb-4">Please confirm your deposit details and proceed to payment.</p>
       
-      <div className="text-left mb-4">
+      <div className="text-left mb-4 bg-[#222] p-4 rounded">
         <p className="mb-2"><strong>Server Provider:</strong> {formData.serverProvider}</p>
         <p className="mb-2"><strong>Username:</strong> {formData.username}</p>
-        <p className="mb-2"><strong>Amount:</strong> ${formData.amount}</p>
+        <p className="mb-2"><strong>Amount:</strong> ${parseFloat(formData?.amount || 0).toFixed(2)}</p>
       </div>
       
       <button 
-        type="button" 
-        onClick={() => goToStep(4)}
-        className="w-full bg-[#0f0] text-black font-bold p-2 rounded hover:bg-[#0c0] cursor-pointer"
+        type="button"
+        onClick={handleStripeCheckout}
+        disabled={loading}
+        className={`w-full ${loading ? 'bg-gray-500' : 'bg-[#0f0] hover:bg-[#0c0]'} 
+          text-black font-bold p-2 rounded cursor-pointer transition-colors`}
       >
-        Confirm
+        {loading ? 'Processing...' : 'Confirm & Pay Now'}
       </button>
     </div>
   );
