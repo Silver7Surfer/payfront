@@ -6,15 +6,19 @@ import App from './App.jsx'
 import PaymentSuccessPage from './components/PaymentSuccessPage.jsx'
 import PaymentCancelPage from './components/PaymentCancelPage.jsx'
 import PaymentFailurePage from './components/PaymentFailurePage.jsx'
+import MerchantNotFoundPage from './components/MerchantNotFoundPage.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/merchant1" element={<App merchant="merchant1" />} />
+        <Route path="/merchant2" element={<App merchant="merchant2" />} />
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/payment-cancel" element={<PaymentCancelPage />} />
         <Route path="/payment-failure" element={<PaymentFailurePage />} />
+        <Route path="*" element={<MerchantNotFoundPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

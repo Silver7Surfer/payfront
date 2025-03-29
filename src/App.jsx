@@ -3,7 +3,7 @@ import Step1 from './components/Step1';
 import Step2 from './components/Step2';
 import Step3 from './components/Step3';
 
-function App() {
+function App({ merchant = 'default' }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     serverProvider: '',
@@ -70,7 +70,9 @@ function App() {
   return (
     <div className="min-h-screen w-full bg-black text-white font-sans text-center flex flex-col justify-between">
       <div className="flex-grow flex flex-col items-center justify-center py-5 px-4">
-        <h1 className="text-2xl font-bold mb-8">PayNow</h1>
+        <h1 className="text-2xl font-bold mb-8">
+          PayNow {merchant !== 'default' ? `- ${merchant.toUpperCase()}` : ''}
+        </h1>
         
         <form id="depositForm" className="w-full max-w-md">
           {currentStep === 1 && (
@@ -98,6 +100,7 @@ function App() {
               formData={formData}
               goToStep={goToStep}
               currentStep={currentStep}
+              merchant={merchant}
             />
           )}
         </form>
