@@ -13,7 +13,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/merchant1" element={<App merchant="merchant1" />} />
+        <Route path="/cosmic-gaming" element={<App merchant="cosmic_gaming" />} />
         <Route path="/merchant2" element={<App merchant="merchant2" />} />
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/payment-cancel" element={<PaymentCancelPage />} />
