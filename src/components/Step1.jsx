@@ -38,6 +38,10 @@ const Step1 = ({ formData, errors, handleInputChange, goToStep, currentStep }) =
         <option value="Yolo">8 Yolo</option>
         <option value="Cash Machine">9 Cash Machine</option>
         <option value="Panda Master">10 Panda Master</option>
+        <option value="Mafia">11 Mafia</option>
+        <option value="Noble">12 Noble</option>
+        <option value="Game Room">13 Game Room</option>
+        <option value="Vegas Sweeps">14 Vegas Sweeps</option>
       </select>
       
       {errors.serverProvider && 

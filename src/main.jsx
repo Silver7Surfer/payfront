@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/cosmic-gaming" element={<App merchant="cosmic_gaming" />} />
-        <Route path="/merchant2" element={<App merchant="merchant2" />} />
+        <Route path="/skiee-gaming" element={<App merchant="skiee_gaming" />} />
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/payment-cancel" element={<PaymentCancelPage />} />
         <Route path="/payment-failure" element={<PaymentFailurePage />} />
